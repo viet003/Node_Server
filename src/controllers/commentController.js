@@ -33,3 +33,20 @@ export const createComment = async (req, res) => {
         return res.status(500).json(error)
     }
 }
+
+// xoa comment
+export const deleteComment = async (req, res) => {
+    const { id } = req.body;
+    try {
+        if (!id ) {
+            return res.status(400).json({
+                err: 1,
+                msg: "Missing input data!"
+            })
+        }
+        const rs = await commentService.deleteCommentService(req.body)
+        return res.status(200).json(rs)
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+}

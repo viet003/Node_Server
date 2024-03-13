@@ -26,11 +26,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   lecturer.init({
+    id: {
+      type: DataTypes.STRING,
+      primaryKey: true
+    },
     name: DataTypes.STRING,
     dob: DataTypes.STRING,
     major: DataTypes.STRING,
     department: DataTypes.STRING,
-    isActive: DataTypes.TINYINT
+    isActive: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'lecturer',

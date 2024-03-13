@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     studentid: DataTypes.STRING,
     topicid: DataTypes.STRING,
-    isadded: DataTypes.TINYINT
+    isadded: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'group',

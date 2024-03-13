@@ -53,5 +53,6 @@ router.delete('/deleteannouncement', announcementController.deleteAnnouncement)
 // comments
 router.post('/getcomments', commentService.getAllComments)
 router.post('/createcomment', commentService.createComment)
+router.delete('/deletecomment', commentService.deleteComment)
 
 export default router

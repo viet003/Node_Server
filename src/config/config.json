@@ -1,24 +1,28 @@
 {
   "development": {
-    "username": "root",
-    "password": "Viet211003@",
-    "database": "projectdb",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "logging": false
-  },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "viet003",
+    "password": "Wx_bzoLzmXUdQBtmPRf3BQ",
+    "database": "defaultdb",
+    "host": "nodedb-6250.6xw.aws-ap-southeast-1.cockroachlabs.cloud",
+    "port": 26257,
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": true
+      }
+    }
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "viet003",
+    "password": "Wx_bzoLzmXUdQBtmPRf3BQ",
+    "database": "defaultdb",
+    "host": "nodedb-6250.6xw.aws-ap-southeast-1.cockroachlabs.cloud",
+    "port": 26257,
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": true
+      }
+    }
   }
 }

@@ -29,15 +29,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   student.init({
+    id: {
+      type: DataTypes.STRING,
+      primaryKey: true
+    },
     name: DataTypes.STRING,
     dob: DataTypes.STRING,
     major: DataTypes.STRING,
     class: DataTypes.STRING,
     department: DataTypes.STRING,
-    isActive: DataTypes.TINYINT
+    isActive: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'student',
+    validate: false
   });
   return student;
 };

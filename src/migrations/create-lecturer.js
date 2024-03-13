@@ -25,7 +25,7 @@ module.exports = {
                 allowNull: false
             },
             isActive: {
-                type: Sequelize.TINYINT,
+                type: Sequelize.BOOLEAN,
                 allowNull: false,
             },
             createdAt: {

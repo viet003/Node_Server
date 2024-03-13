@@ -18,9 +18,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   adAccount.init({
+    id: {
+      type: DataTypes.STRING,
+      primaryKey: true
+    },
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    isactive: DataTypes.TINYINT
+    isactive: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'adAccount',

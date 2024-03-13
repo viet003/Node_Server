@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   topic.init({
+    id: {
+      type: DataTypes.STRING,
+      primaryKey: true
+    },
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     quantity: DataTypes.INTEGER,

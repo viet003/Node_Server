@@ -70,7 +70,7 @@ export const updateUser = async (req, res) => {
     try {
         switch (type) {
             case 'Sinh viên':
-                if (!id || !name || !dob || !clas || !major || !department || !type || (isActive !== 0 && isActive !== 1)) {
+                if (!id || !name || !dob || !clas || !major || !department || !type || (isActive != 0 && isActive != 1)) {
                     return res.status(400).json({
                         err: 1,
                         msg: "Missing input data!"
@@ -81,7 +81,7 @@ export const updateUser = async (req, res) => {
                 return res.status(200).json(rs)
                 break;
             default:
-                if (!id || !name || !dob || !major || !department || !type || (isActive !== 0 && isActive !== 1)) {
+                if (!id || !name || !dob || !major || !department || !type || (isActive != 0 && isActive != 1)) {
                     return res.status(400).json({
                         err: 1,
                         msg: "Missing input data!"

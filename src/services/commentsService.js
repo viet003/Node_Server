@@ -56,7 +56,7 @@ export const getAllCommentsService = async ({ id }) => {
 
         const comments = await db.comment.findAll({
             where: {
-                announcementId: id
+                announcementid: id
             },
             include: [
                 {
@@ -85,6 +85,24 @@ export const createCommentService = async ({ announcementid, userid, content }) 
             announcementid,
             userid,
             content
+        })
+        return {
+            err: response ? 0 : 2,
+            msg: response ? 'Success' : 'Fail'
+        }
+    } catch (error) {
+        throw (error)
+    }
+}
+
+
+// xóa comment
+export const deleteCommentService = async ({ id }) => {
+    try {
+        const response = await db.comment.destroy({
+            where: {
+                id
+            }
         })
         return {
             err: response ? 0 : 2,
