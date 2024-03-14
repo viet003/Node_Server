@@ -14,7 +14,7 @@ export const addToGroupService = async ({ name, studentid, topicid }) => {
 
             return {
                 err: response ? 0 : 2,
-                msg: response ? 'Đăng ký thành công! Vui lòng chờ đợi giảng viên chấp nhận' : 'Đăng ký không thành công! Đã xảy ra lỗi!'
+                msg: response ? 'Đăng ký thành công! Vui lòng chờ đợi giảng viên chấp nhận.' : 'Đăng ký không thành công! Đã xảy ra lỗi.'
             };
         } else {
             return {
@@ -95,7 +95,7 @@ export const getGroupService = async ({ studentid, schoolyear }) => {
         });
         return {
             err: response ? 0 : 2,
-            msg: response ? 'Successful' : 'Failed',
+            msg: response ? 'Thành công!' : 'Không thành công!',
             data: response
         };
 
@@ -114,7 +114,7 @@ export const getStudentService = async ({ topicid }) => {
             include: [
                 {
                     model: db.lecturer,
-                    as: 'lecturerTopic', // Sử dụng alias đã đặt tên là 'studentAccount'
+                    as: 'lecturerTopic', 
                     attributes: ['name']
                 }
             ]
@@ -139,7 +139,7 @@ export const getStudentService = async ({ topicid }) => {
         });
         return {
             err: response ? 0 : 2,
-            msg: response ? 'Successful' : 'Failed',
+            msg: response ? 'Thành công!' : 'Không thành công!',
             data: response,
             info: rs
         };

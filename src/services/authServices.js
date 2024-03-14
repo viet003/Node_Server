@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+
 // tạo mật khẩu ngẫu nhiên
 function generateRandomPassword(length) {
     const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
@@ -32,7 +33,7 @@ export const registerService = ({ id, email, password, type, userid }) => new Pr
                 const token = response[1] && jwt.sign({ id: response[0].id, email: response[0].email }, process.env.SECRET_KEY, { expiresIn: '1d' });
                 resolve({
                     err: token ? 0 : 2,
-                    msg: token ? 'Successful account registration!' : 'Account is already in use!',
+                    msg: token ? 'Tạo tài khoản thành công!' : 'Email đã được sử dụng. Vui lòng sử dụng một email khác.',
                     //token: token || null
                 });
             } catch (error) {
@@ -54,7 +55,7 @@ export const registerService = ({ id, email, password, type, userid }) => new Pr
                     const token = response[1] && jwt.sign({ id: response[0].id, email: response[0].email }, process.env.SECRET_KEY, { expiresIn: '1d' });
                     resolve({
                         err: token ? 0 : 2,
-                        msg: token ? 'Successful account registration!' : 'Account is already in use!',
+                        msg: token ? 'Tạo tài khoản thành công!' : 'Email đã được sử dụng. Vui lòng sử dụng một email khác.',
                     });
                 } else {
                     resolve({
@@ -81,7 +82,7 @@ export const registerService = ({ id, email, password, type, userid }) => new Pr
                     const token = response[1] && jwt.sign({ id: response[0].id, email: response[0].email }, process.env.SECRET_KEY, { expiresIn: '1d' });
                     resolve({
                         err: token ? 0 : 2,
-                        msg: token ? 'Successful account registration!' : 'Account is already in use!',
+                        msg: token ? 'Tạo tài khoản thành công!' : 'Email đã được sử dụng. Vui lòng sử dụng một email khác.',
                     });
                 } else {
                     resolve({
@@ -109,7 +110,7 @@ export const loginService = ({ email, password, type }) => new Promise(async (re
                 const token = isCorrectPass && jwt.sign({ id: response.id, email: response.email, type: type }, process.env.SECRET_KEY, { expiresIn: '1d' });
                 resolve({
                     err: token ? 0 : 2,
-                    msg: token ? 'Successful login!' : response ? 'Pass is wrong!!' : "Email is not found!",
+                    msg: token ? 'Thành công!' : response ? 'Mật khẩu không chính xác.' : "Không tìm thấy thông tin email.",
                     token: token || null,
                 });
             } catch (error) {
@@ -124,7 +125,7 @@ export const loginService = ({ email, password, type }) => new Promise(async (re
                     include: [
                         {
                             model: db.student,
-                            as: 'studentAccount', // Sử dụng alias đã đặt tên là 'studentAccount'
+                            as: 'studentAccount', 
                             attributes: ['name']
                         }
                     ],
@@ -133,7 +134,7 @@ export const loginService = ({ email, password, type }) => new Promise(async (re
                 const token = isCorrectPass && jwt.sign({ id: response.userid, email: response.email, type: type, name: response['studentAccount.name'] }, process.env.SECRET_KEY, { expiresIn: '1d' });
                 resolve({
                     err: token ? 0 : 2,
-                    msg: token ? 'Successful login!' : response ? 'Pass is wrong!!' : "Email is not found!",
+                    msg: token ? 'Thành công!' : response ? 'Mật khẩu không chính xác.' : "Không tìm thấy thông tin email.",
                     token: token || null,
                     //data: response
                 });
@@ -158,7 +159,7 @@ export const loginService = ({ email, password, type }) => new Promise(async (re
                 const token = isCorrectPass && jwt.sign({ id: response.userid, email: response.email, type: type, name: response["lecturerAccount.name"] }, process.env.SECRET_KEY, { expiresIn: '1d' });
                 resolve({
                     err: token ? 0 : 2,
-                    msg: token ? 'Successful login!' : response ? 'Pass is wrong!!' : "Email is not found!",
+                    msg: token ? 'Thành công!' : response ? 'Mật khẩu không chính xác.' : "Không tìm thấy thông tin email.",
                     token: token || null,
                     //data: response
                 });
@@ -186,7 +187,6 @@ export const getPassService = ({ email, type }) => new Promise(async (resolve, r
                                 email,
                             },
                         });
-                        // Tạo một transporter bằng cách cung cấp thông tin về máy chủ email
                         let transporter = nodemailer.createTransport({
                             host: 'smtp.gmail.com', // Host của Gmail
                             port: 465, // Cổng SMTP của Gmail
@@ -196,7 +196,6 @@ export const getPassService = ({ email, type }) => new Promise(async (resolve, r
                                 pass: process.env.PASS_EMAIL
                             }
                         });
-                        // Định nghĩa các thông tin cần thiết cho email
                         let mailOptions = {
                             from: process.env.MAILER_EMAIL,
                             to: response.email,
@@ -276,14 +275,13 @@ export const getPassService = ({ email, type }) => new Promise(async (resolve, r
                         transporter.sendMail(mailOptions, (error, info) => {
                             resolve({
                                 err: error ? 2 : 0,
-                                msg: error ? `Email can't send to ${email}` : `Mật khẩu mới đã được gửi đến ${email}. Vui lòng kiểm tra email của bạn.`
+                                msg: error ? `Không thể gửi thông tin đến ${email}` : `Mật khẩu mới đã được gửi đến ${email}. Vui lòng kiểm tra email của bạn.`
                             })
                         });
                     } catch (error) {
-                        console.log(error)
                         resolve({
                             err: 2,
-                            msg: "Can't update password!"
+                            msg: "Không thể update mật khẩu!"
                         })
                     }
 
@@ -310,7 +308,6 @@ export const getPassService = ({ email, type }) => new Promise(async (resolve, r
                                 email,
                             },
                         });
-                        // Tạo một transporter bằng cách cung cấp thông tin về máy chủ email
                         let transporter = nodemailer.createTransport({
                             host: 'smtp.gmail.com', // Host của Gmail
                             port: 465, // Cổng SMTP của Gmail
@@ -320,7 +317,6 @@ export const getPassService = ({ email, type }) => new Promise(async (resolve, r
                                 pass: process.env.PASS_EMAIL
                             }
                         });
-                        // Định nghĩa các thông tin cần thiết cho email
                         let mailOptions = {
                             from: process.env.MAILER_EMAIL,
                             to: response.email,
@@ -401,14 +397,13 @@ export const getPassService = ({ email, type }) => new Promise(async (resolve, r
                         transporter.sendMail(mailOptions, (error, info) => {
                             resolve({
                                 err: error ? 2 : 0,
-                                msg: error ? `Email can't send to ${email}` : `Mật khẩu mới đã được gửi đến ${email}. Vui lòng kiểm tra email của bạn.`
+                                msg: error ? `Không thể gửi thông tin đến ${email}` : `Mật khẩu mới đã được gửi đến ${email}. Vui lòng kiểm tra email của bạn.`
                             })
                         });
                     } catch (error) {
-                        console.log(error)
                         resolve({
                             err: 2,
-                            msg: "Can't update password!"
+                            msg: "Không thể update mật khẩu!"
                         })
                     }
 
@@ -435,7 +430,6 @@ export const getPassService = ({ email, type }) => new Promise(async (resolve, r
                                 email,
                             },
                         });
-                        // Tạo một transporter bằng cách cung cấp thông tin về máy chủ email
                         let transporter = nodemailer.createTransport({
                             host: 'smtp.gmail.com', // Host của Gmail
                             port: 465, // Cổng SMTP của Gmail
@@ -445,7 +439,6 @@ export const getPassService = ({ email, type }) => new Promise(async (resolve, r
                                 pass: process.env.PASS_EMAIL
                             }
                         });
-                        // Định nghĩa các thông tin cần thiết cho email
                         let mailOptions = {
                             from: process.env.MAILER_EMAIL,
                             to: response.email,
@@ -525,14 +518,13 @@ export const getPassService = ({ email, type }) => new Promise(async (resolve, r
                         transporter.sendMail(mailOptions, (error, info) => {
                             resolve({
                                 err: error ? 2 : 0,
-                                msg: error ? `Email can't send to ${email}` : `Mật khẩu mới đã được gửi đến ${email}. Vui lòng kiểm tra email của bạn.`
+                                msg: error ? `Không thể gửi thông tin đến ${email}` : `Mật khẩu mới đã được gửi đến ${email}. Vui lòng kiểm tra email của bạn.`
                             })
                         });
                     } catch (error) {
-                        console.log(error)
                         resolve({
                             err: 2,
-                            msg: "Can't update password!"
+                            msg: "Không thể update mật khẩu!"
                         })
                     }
 
@@ -560,32 +552,30 @@ export const changePassService = ({ email, password, newpassword, type }) => new
                 });
                 const isCorrectPass = response && bcrypt.compareSync(password, response.password)
                 if (isCorrectPass) {
-                    await db.svAccount.update({ password: hash(newpassword) }, {
-                        where: {
-                            email,
-                        },
-                    });
-                    resolve({
-                        err: 0,
-                        msg: "Update successful!"
-                    })
                     try {
+                        await db.svAccount.update({ password: hash(newpassword) }, {
+                            where: {
+                                email,
+                            },
+                        });
+                        resolve({
+                            err: 0,
+                            msg: "Thay đổi mật khẩu thành công!"
+                        })
                     } catch (error) {
-                        console.log(error)
                         resolve({
                             err: 2,
-                            msg: "Can't update password!"
+                            msg: "Không thể update mật khẩu!"
                         })
                     }
                 } else {
                     resolve({
                         err: 2,
-                        msg: "Email doesn't exists or pass is wrong!"
+                        msg: "Thông tin tài khoản hoặc mật khẩu chưa chính xác!"
                     })
                 }
 
             } catch (error) {
-                console.log(error)
                 reject(error)
             }
             break;
@@ -597,32 +587,30 @@ export const changePassService = ({ email, password, newpassword, type }) => new
                 });
                 const isCorrectPass = response && bcrypt.compareSync(password, response.password)
                 if (isCorrectPass) {
-                    await db.adAccount.update({ password: hash(newpassword) }, {
-                        where: {
-                            email,
-                        },
-                    });
-                    resolve({
-                        err: 0,
-                        msg: "Update successful!"
-                    })
                     try {
+                        await db.adAccount.update({ password: hash(newpassword) }, {
+                            where: {
+                                email,
+                            },
+                        });
+                        resolve({
+                            err: 0,
+                            msg: "Thay đổi mật khẩu thành công!"
+                        })
                     } catch (error) {
-                        console.log(error)
                         resolve({
                             err: 2,
-                            msg: "Can't update password!"
+                            msg: "Không thể update mật khẩu!"
                         })
                     }
                 } else {
                     resolve({
                         err: 2,
-                        msg: "Email doesn't exists or pass is wrong!"
+                        msg: "Thông tin tài khoản hoặc mật khẩu chưa chính xác!"
                     })
                 }
 
             } catch (error) {
-                console.log(error)
                 reject(error)
             }
             break;
@@ -634,32 +622,30 @@ export const changePassService = ({ email, password, newpassword, type }) => new
                 });
                 const isCorrectPass = response && bcrypt.compareSync(password, response.password)
                 if (isCorrectPass) {
-                    await db.gvAccount.update({ password: hash(newpassword) }, {
-                        where: {
-                            email,
-                        },
-                    });
-                    resolve({
-                        err: 0,
-                        msg: "Update successful!"
-                    })
                     try {
+                        await db.gvAccount.update({ password: hash(newpassword) }, {
+                            where: {
+                                email,
+                            },
+                        });
+                        resolve({
+                            err: 0,
+                            msg: "Thay đổi mật khẩu thành công!"
+                        })
                     } catch (error) {
-                        console.log(error)
                         resolve({
                             err: 2,
-                            msg: "Can't update password!"
+                            msg: "Không thể update mật khẩu!"
                         })
                     }
                 } else {
                     resolve({
                         err: 2,
-                        msg: "Email doesn't exists or pass is wrong!"
+                        msg: "Thông tin tài khoản hoặc mật khẩu chưa chính xác!"
                     })
                 }
 
             } catch (error) {
-                console.log(error)
                 reject(error)
             }
             break
@@ -687,7 +673,7 @@ export const getAccountService = ({ type }) => new Promise(async (resolve, rejec
                     include: [
                         {
                             model: db.student,
-                            as: 'studentAccount', // Sử dụng alias đã đặt tên là 'studentAccount'
+                            as: 'studentAccount', 
                             attributes: ['name']
                         }
                     ],
@@ -708,7 +694,7 @@ export const getAccountService = ({ type }) => new Promise(async (resolve, rejec
                     include: [
                         {
                             model: db.lecturer,
-                            as: 'lecturerAccount', // Sử dụng alias đã đặt tên là 'studentAccount'
+                            as: 'lecturerAccount', 
                             attributes: ['name']
                         }
                     ],

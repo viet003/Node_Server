@@ -13,7 +13,7 @@ export const register = async (req, res) => {
                 if (!type || !email || !password || !id) {
                     return res.status(400).json({
                         err: 1,
-                        msg: "Invalid input data!"
+                        msg: "Missing input data!"
                     })
                 }
                 const rs = await authService.registerService(req.body)
@@ -33,11 +33,7 @@ export const register = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error)
-        return res.status(500).json({
-            err: -1,
-            msg: "Fail at auth controller!/register"
-        })
+        return res.status(500).json(error)
     }
 }
 // đăng nhập
@@ -55,11 +51,7 @@ export const login = async (req, res) => {
         return res.status(200).json(rs)
 
     } catch (error) {
-        console.log(error)
-        return res.status(500).json({
-            err: -1,
-            msg: "Fail at auth controller!/login"
-        })
+        return res.status(500).json(error)
     }
 }
 // lấy lại mật khẩu

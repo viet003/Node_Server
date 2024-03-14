@@ -47,12 +47,10 @@ export const getTopicServiceForSt = ({ userid, schoolyear }) => new Promise(asyn
             });
 
             if (response && Array.isArray(response) && response.length > 0) {
-                // Sử dụng Promise.all để đợi tất cả các promise được trả về từ mảng db.group.findAll
                 const newresponse = await Promise.all(response.map(async (e) => {
                     const rs = await db.group.findAll({
                         where: { topicid: e.id }
                     });
-                    // Tiếp tục xử lý kết quả ở đây
                     return { ...e.toJSON(), currentQuantity: rs.length };
                 }));
 
@@ -62,7 +60,6 @@ export const getTopicServiceForSt = ({ userid, schoolyear }) => new Promise(asyn
                     data: newresponse
                 });
             } else {
-                // Xử lý trường hợp không có response hoặc response không có phần tử
                 resolve({
                     err: 2,
                     msg: 'Không có dữ liệu',
@@ -70,9 +67,8 @@ export const getTopicServiceForSt = ({ userid, schoolyear }) => new Promise(asyn
                 });
             }
         } else {
-            // Xử lý trường hợp đã kiểm tra
             resolve({
-                msg: 'Đã kiểm tra',
+                msg: 'Sinh viên đã có nhóm',
                 data: []
             });
         }
@@ -88,7 +84,7 @@ export const getTopicServiceForLr = ({ userid, schoolyear }) => new Promise(asyn
             include: [
                 {
                     model: db.lecturer,
-                    as: 'lecturerTopic', // Sử dụng alias đã đặt tên là 'studentAccount'
+                    as: 'lecturerTopic', 
                     attributes: ['name']
                 }
             ],
@@ -124,7 +120,6 @@ export const editTopicService = async ({ id, title, quantity, description, schoo
     try {
         const checkTopic = await db.topic.findOne({ where: { id: id } });
         if (checkTopic) {
-            // Nếu id không tồn tại
             const response = await db.topic.update({
                 title,
                 quantity,
@@ -155,7 +150,7 @@ export const getTopicInforService = async ({ id }) => {
             include: [
                 {
                     model: db.lecturer,
-                    as: 'lecturerTopic', // Sử dụng alias đã đặt tên là 'studentAccount'
+                    as: 'lecturerTopic', 
                     attributes: ['name']
                 }
             ],

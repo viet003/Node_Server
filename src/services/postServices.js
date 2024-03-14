@@ -3,16 +3,14 @@ import db from "../models"
 // tạo post
 export const createPostService = ({ title, link, description, userid }) => new Promise(async (resolve, reject) => {
     try {
-        // Kiểm tra xem userid có tồn tại trong bảng adAccount không
         const adAccount = await db.adAccount.findOne({ where: { id: userid } });
 
         if (!adAccount) {
             resolve({
                 err: 2,
-                msg: 'Tạo không thành công! UserID không tồn tại!'
+                msg: 'Tạo không thành công. UserID không tồn tại.'
             });
         } else {
-            // Nếu userid tồn tại, tiến hành tạo bài đăng
             const response = await db.post.create({
                 title,
                 link,
@@ -22,7 +20,7 @@ export const createPostService = ({ title, link, description, userid }) => new P
 
             resolve({
                 err: response ? 0 : 2,
-                msg: response ? 'Tạo thành công!' : 'Tạo không thành công! Đã xảy ra lỗi!'
+                msg: response ? 'Tạo thành công!' : 'Tạo không thành công. Đã xảy ra lỗi.'
             });
         }
     } catch (error) {
@@ -40,23 +38,23 @@ export const deletePostService = ({ id }) => new Promise(async (resolve, reject)
 
         resolve({
             err: response ? 0 : 2,
-            msg: response ? 'Xóa thành công!' : "Xóa không thành công! Kiểm tra lại ID!"
+            msg: response ? 'Xóa thành công!' : "Xóa không thành công. Kiểm tra lại ID."
         })
     } catch (error) {
         reject(error)
     }
 })
 // lấy post
-export const getPostService = () => new Promise( async (resolve,reject) => {
+export const getPostService = () => new Promise(async (resolve, reject) => {
     try {
         const response = await db.post.findAll({
             order: [['id', 'DESC']],
         });
-                resolve({
-                    err: response.length === 0 ? 2 : 0,
-                    msg: 'Post',
-                    data: response
-                })
+        resolve({
+            err: response.length === 0 ? 2 : 0,
+            msg: 'Post',
+            data: response
+        })
     } catch (error) {
         reject(error)
     }

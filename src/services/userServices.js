@@ -81,7 +81,7 @@ export const createUserService = ({ id, name, dob, clas, major, department, type
                 if (checkST) {
                     resolve({
                         err: 2,
-                        msg: "UserID đã được sử dụng!"
+                        msg: "UserID đã được sử dụng."
                     })
                 } else {
                     const response = await db.student.create({
@@ -95,7 +95,7 @@ export const createUserService = ({ id, name, dob, clas, major, department, type
                     })
                     resolve({
                         err: response ? 0 : 2,
-                        msg: response ? 'Thêm mới sinh viên thành công!' : 'Thêm mới không thành công!'
+                        msg: response ? 'Thêm mới sinh viên thành công!' : 'Thêm mới không thành công.'
                     })
                 }
             } catch (error) {
@@ -121,7 +121,7 @@ export const createUserService = ({ id, name, dob, clas, major, department, type
                     })
                     resolve({
                         err: response ? 0 : 2,
-                        msg: response ? 'Thêm mới giảng viên thành công!' : 'Thêm mới không thành công!'
+                        msg: response ? 'Thêm mới giảng viên thành công!' : 'Thêm mới không thành công.'
                     })
                 }
             } catch (error) {
@@ -151,12 +151,12 @@ export const updateUserService = ({ id, name, dob, clas, major, department, isAc
                     })
                     resolve({
                         err: response ? 0 : 2,
-                        msg: response ? 'Update thành công!' : ' Update không thành công!'
+                        msg: response ? 'Update thành công!' : ' Update không thành công.'
                     })
                 } else {
                     resolve({
                         err: 2,
-                        msg: 'Sinh viên không tồn tại!'
+                        msg: 'Sinh viên không tồn tại.'
                     })
                 }
             } catch (error) {
@@ -181,7 +181,7 @@ export const updateUserService = ({ id, name, dob, clas, major, department, isAc
                     })
                     resolve({
                         err: response ? 0 : 2,
-                        msg: response ? 'Updtae thành công!' : ' Update không thành công!'
+                        msg: response ? 'Updtae thành công!' : ' Update không thành công.'
                     })
                 } else {
                     resolve({

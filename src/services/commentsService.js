@@ -31,7 +31,7 @@ import db from "../models";
 //             }
 //         });
 //         return {
-//             msg: response ? 'Success' : 'Fail',
+//             msg: response ? 'Thành công!' : 'Không thành công.',
 //             data: response
 //         };
 //     } catch (error) {
@@ -68,7 +68,7 @@ export const getAllCommentsService = async ({ id }) => {
         });
 
         return {
-            msg: announcement ? 'Success' : 'Fail',
+            msg: announcement ? 'Thành công!' : 'Không thành công.',
             data: [announcement, comments]
         };
     } catch (error) {
@@ -88,7 +88,7 @@ export const createCommentService = async ({ announcementid, userid, content }) 
         })
         return {
             err: response ? 0 : 2,
-            msg: response ? 'Success' : 'Fail'
+            msg: response ? 'Thành công!' : 'Không thành công.'
         }
     } catch (error) {
         throw (error)
@@ -106,7 +106,7 @@ export const deleteCommentService = async ({ id }) => {
         })
         return {
             err: response ? 0 : 2,
-            msg: response ? 'Success' : 'Fail'
+            msg: response ? 'Thành công!' : 'Không thành công.'
         }
     } catch (error) {
         throw (error)

@@ -55,7 +55,7 @@ export const getAllAnnouncementService = async ({ topicid }) => {
         })
         return {
             err: response ? 0 : 2,
-            msg: response ? 'Success' : 'Fail!',
+            msg: response ? 'Thành công!' : 'Không thành công!!',
             data: response
         }
     } catch (error) {
@@ -90,7 +90,7 @@ export const getAllAnnouncementServiceByUser = async ({ userid, type }) => {
 
                 return {
                     err: response ? 0 : 2,
-                    msg: response ? 'Success' : 'Fail!',
+                    msg: response ? 'Thành công!' : 'Không thành công!!',
                     data: response
                 }
             } catch (error) {
@@ -115,7 +115,7 @@ export const getAllAnnouncementServiceByUser = async ({ userid, type }) => {
 
                 return {
                     err: response ? 0 : 2,
-                    msg: response ? 'Success' : 'Fail!',
+                    msg: response ? 'Thành công!' : 'Không thành công!!',
                     data: response
                 }
             } catch (error) {
@@ -134,7 +134,7 @@ export const deleteAnnouncementService = async ({ id }) => {
         })
         return {
             err: response ? 0 : 2,
-            msg: response ? 'Success' : 'Fail'
+            msg: response ? 'Thành công!' : 'Không thành công!'
         }
     } catch (error) {
         throw (error)

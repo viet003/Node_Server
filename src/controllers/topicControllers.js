@@ -49,7 +49,6 @@ export const getTopic = async (req, res) => {
                 const rs = await topicService.getTopicServiceForSt(req.body)
                 return res.status(200).json(rs)
             } catch (error) {
-                console.log(error)
                 return res.status(500).json(error)
             }
             break;
