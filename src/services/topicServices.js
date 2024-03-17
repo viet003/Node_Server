@@ -33,7 +33,17 @@ export const createTopicService = async ({ id, title, quantity, description, sch
 // lấy topic student
 export const getTopicServiceForSt = ({ userid, schoolyear }) => new Promise(async (resolve, reject) => {
     try {
-        const checkDK = await db.group.findOne({ where: { studentid: userid } });
+        const checkDK = await db.group.findOne({
+            include: [
+                {
+                    model: db.topic,
+                    as: 'topics',
+                    attributes: ['schoolyear']
+                }
+            ],
+            where: { studentid: userid, '$topics.schoolyear$': schoolyear },
+        });
+        // console.log(checkDK)
         if (!checkDK) {
             const response = await db.topic.findAll({
                 where: { schoolyear },
@@ -84,7 +94,7 @@ export const getTopicServiceForLr = ({ userid, schoolyear }) => new Promise(asyn
             include: [
                 {
                     model: db.lecturer,
-                    as: 'lecturerTopic', 
+                    as: 'lecturerTopic',
                     attributes: ['name']
                 }
             ],
@@ -150,7 +160,7 @@ export const getTopicInforService = async ({ id }) => {
             include: [
                 {
                     model: db.lecturer,
-                    as: 'lecturerTopic', 
+                    as: 'lecturerTopic',
                     attributes: ['name']
                 }
             ],
