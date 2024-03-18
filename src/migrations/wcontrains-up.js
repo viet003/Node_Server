@@ -86,18 +86,6 @@ module.exports = {
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });
-        // students với sv account
-        // await queryInterface.addConstraint('comments', {
-        //     fields: ['userid'],
-        //     type: 'foreign key',
-        //     name: 'fk_comment_userid', // Tên constraint phải là duy nhất
-        //     references: {
-        //         table: 'students',
-        //         field: 'id'
-        //     },
-        //     onDelete: 'CASCADE',
-        //     onUpdate: 'CASCADE'
-        // });
     },
     async down(queryInterface, Sequelize) {
         // Xóa ràng buộc ngoại tuyến giữa 'gvAccounts' và 'lectures'

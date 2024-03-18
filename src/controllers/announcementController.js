@@ -1,5 +1,6 @@
 import * as announcementService from "../services/announcementsService"
 
+// tạo thông báo
 export const createAnnouncement = async (req, res) => {
     const { title, content, topicid, userid } = req.body;
     try {
@@ -15,7 +16,7 @@ export const createAnnouncement = async (req, res) => {
         return res.status(500).json(error)
     }
 }
-
+// edit thông báo
 export const editAnnouncement = async (req, res) => {
     const { id, title, content } = req.body;
     try {
@@ -31,7 +32,7 @@ export const editAnnouncement = async (req, res) => {
         return res.status(500).json(error)
     }
 }
-
+// lấy tất cả thông báo
 export const getAllAnnouncement = async (req, res) => {
     const { topicid, userid, type } = req.body;
     try {
@@ -48,7 +49,7 @@ export const getAllAnnouncement = async (req, res) => {
     }
 }
 
-//
+// xóa thông báo
 export const deleteAnnouncement = async (req, res) => {
     const { id } = req.body;
     try {

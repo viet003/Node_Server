@@ -50,11 +50,10 @@ module.exports = {
         //         table: 'lecturers',
         //         field: 'id'
         //     },
-        //     onDelete: 'CASCADE', // Xóa bài viết khi tài khoản quảng cáo bị xóa
-        //     onUpdate: 'CASCADE' // Cập nhật userId trong bài viết khi userId của tài khoản quảng cáo được cập nhật
+        //     onDelete: 'CASCADE', 
+        //     onUpdate: 'CASCADE' 
         // });
         
-        // Thêm ràng buộc ngoại tuyến giữa 'posts' và 'adAccounts'
     },
     async down(queryInterface, Sequelize) {
         await queryInterface.dropTable('topics');

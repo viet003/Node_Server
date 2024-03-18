@@ -1,5 +1,6 @@
 import * as groupService from "../services/groupServices"
 
+// đăng ký tham gia vào group
 export const addToGroup = async (req, res) => {
     const { name, studentid, topicid } = req.body;
     try {
@@ -15,7 +16,7 @@ export const addToGroup = async (req, res) => {
         return res.status(500).json(error)
     }
 }
-
+// đồng ý yêu cầu tham gia group
 export const acceptToGroup = async (req, res) => {
     const { studentid, topicid } = req.body;
     try {
@@ -31,7 +32,7 @@ export const acceptToGroup = async (req, res) => {
         return res.status(500).json(error)
     }
 }
-
+// từ chối yêu cầu
 export const removeFromGroup = async (req, res) => {
     const { studentid, topicid } = req.body;
     try {

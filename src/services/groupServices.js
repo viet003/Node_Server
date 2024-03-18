@@ -90,7 +90,7 @@ export const getGroupService = async ({ studentid, schoolyear }) => {
             ],
             where: {
                 '$topics.schoolyear$': schoolyear,
-                studentid // Áp dụng điều kiện trên cột 'schoolyear' của bảng 'topics'
+                studentid 
             }
         });
         return {

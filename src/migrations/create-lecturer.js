@@ -37,10 +37,6 @@ module.exports = {
                 type: Sequelize.DATE
             }
         });
-        //await queryInterface.addIndex('adAccounts', ['id']);
-
-        // Thêm ràng buộc ngoại tuyến giữa 'posts' và 'adAccounts'
-        // await queryInterface.addIndex('lecturers', ['id']);
     },
     async down(queryInterface, Sequelize) {
         await queryInterface.dropTable('lecturers');
